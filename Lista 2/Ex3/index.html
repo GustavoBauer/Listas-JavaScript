@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+	<title> Lista 2 - Exercício 3 </title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../../css/style.css">
+	<link rel="stylesheet" href="../../css/menu.css">
+	<script src="js/app.js"> </script>
+	<script src="../../js/menu.js"> </script>
+</head>
+
+<body>
+	<div class="topnav" id="myTopnav">
+		<a href="../../index.html" class="active">Home</a>
+		<a href="../../pdf\lista2.pdf" target="_blank">PDF</a>
+		<a href="../../Lista 2\Ex1\index.html">Exercício 1</a>
+		<a href="../../Lista 2\Ex2\index.html">Exercício 2</a>
+		<a href="../../Lista 2\Ex3\index.html">Exercício 3</a>
+		<a href="../../Lista 2\Ex4\index.html">Exercício 4</a>
+		<a href="../../Lista 2\Ex5\index.html">Exercício 5</a>
+		<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+	</div>
+	<div class="form-container">
+		<form name="entrada" onsubmit="return false">
+			<h3>Entrada</h3>
+				Sexo:
+				<label><input id="input1" type="radio" name="sexo" value="m" required>Masculino</label>
+				<label><input id="input2" type="radio" name="sexo" value="f">Feminino </label> <br> <br>
+			<label>
+				Massa corporal (kg): <br>
+				<input id="input3" type="number" name="massa" placeholder="56.78" step="0.01" min="0"  required>
+			</label>
+			<label>
+				Altura (m): <br>
+				<input id="input4" type="number" name="altura" placeholder="1.8" step="0.01" min="0" required>
+			</label>
+			<input type="submit" value="Rodar" onclick="executar()">
+		</form>
+		<form name="saida">
+			<h3>Saída</h3>
+			<label>
+				<textarea id="resultado" disabled></textarea>
+			</label>
+		</form>
+	</div>
+	<footer>
+		<a href="../Ex2/index.html"><i class="fa fa-caret-left"></i> Anterior</a>
+		<p>Lista 2 - Exercício 3</p>
+		<a href="../Ex4/index.html">Próximo <i class="fa fa-caret-right"></i></a>
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+	<title> EX Formulario </title>
+	<meta charset="utf-8">
+
+	<!-- Adicionando JQuery -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+	<!-- Adicionando Javascript -->
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+
+			function limpa_formulário_cep() {
+				// Limpa valores do formulário de cep.
+				$("#rua").val("");
+				$("#bairro").val("");
+				$("#cidade").val("");
+				$("#uf").val("");
+				$("#ibge").val("");
+			}
+
+			//Quando o campo cep perde o foco.
+			$("#cep").blur(function () {
+
+				//Nova variável "cep" somente com dígitos.
+				var cep = $(this).val().replace(/\D/g, '');
+
+				//Verifica se campo cep possui valor informado.
+				if (cep != "") {
+
+					//Expressão regular para validar o CEP.
+					var validacep = /^[0-9]{8}$/;
+
+					//Valida o formato do CEP.
+					if (validacep.test(cep)) {
+
+						//Preenche os campos com "..." enquanto consulta webservice.
+						$("#rua").val("...");
+						$("#bairro").val("...");
+						$("#cidade").val("...");
+						$("#uf").val("...");
+						$("#ibge").val("...");
+
+						//Consulta o webservice viacep.com.br/
+						$.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+
+							if (!("erro" in dados)) {
+								//Atualiza os campos com os valores da consulta.
+								$("#rua").val(dados.logradouro);
+								$("#bairro").val(dados.bairro);
+								$("#cidade").val(dados.localidade);
+								$("#uf").val(dados.uf);
+								$("#ibge").val(dados.ibge);
+							} //end if.
+							else {
+								//CEP pesquisado não foi encontrado.
+								limpa_formulário_cep();
+								alert("CEP não encontrado.");
+							}
+						});
+					} //end if.
+					else {
+						//cep é inválido.
+						limpa_formulário_cep();
+						alert("Formato de CEP inválido.");
+					}
+				} //end if.
+				else {
+					//cep sem valor, limpa formulário.
+					limpa_formulário_cep();
+				}
+			});
+		});
+
+	</script>
+</head>
+
+<body>
+	<form>
+		<fieldset>
+			<legend> Identificação do usuário </legend>
+
+			<label>
+				Nome*: <br>
+				<input type="text" name="nome" required autofocus> <br>
+			</label>
+
+			<label>
+				Senha*: <br>
+				<input type="password" name="senha" required> <br>
+			</label>
+
+			<label>
+				CPF*: <br>
+				<input type="text" name="cpf" required placeholder="000000000-00" pattern="\d{9}-?\d{2}"> <br>
+			</label>
+
+			Sexo*: <br>
+			<input type="radio" name="sexo" value="m" required> Masculino<br>
+			<input type="radio" name="sexo" value="f" required> Feminino<br>
+
+			<label>
+				Data de nascimento*: <br>
+				<input type="date" name="data" required> <br>
+			</label>
+
+			Estado civil*: <br>
+			<input type="radio" name="estadocivil" value="casado" required> Casado<br>
+			<input type="radio" name="estadocivil" value="solteiro" required> Solteiro<br>
+			<input type="radio" name="estadocivil" value="viuvo" required> Viúvo<br>
+			<input type="radio" name="estadocivil" value="divorciado" required> Divorciado<br>
+
+			<label>
+				Escolaridade: <br>
+				<input name="escola" list="listaEscolaridade">
+				<datalist id="listaEscolaridade">
+					<option value="Médio incompleto"> </option>
+					<option value="Fundamental incompleto"> </option>
+					<option value="Superior incompleto"> </option>
+					<option value="Médio completo"> </option>
+					<option value="Fundamental completo"> </option>
+					<option value="Superior completo"> </option>
+				</datalist> <br>
+			</label>
+
+			<label>
+				Ocupacao principal: <br>
+				<input type="text" name="ocupacao"> <br>
+			</label>
+
+			<label>
+				Renda Mensal: <br>
+				<input type="text" name="renda"> <br>
+			</label>
+
+			<label>
+				Número de dependentes: <br>
+				<input type="text" name="dependentes"> <br>
+			</label>
+
+			<label>
+				Telefone*: <br>
+				<input type="tel" name="telefone" required> <br>
+			</label>
+
+			<label>
+				Email*: <br>
+				<input type="email" name="email" required placeholder="seuemail@email.com"> <br>
+			</label>
+		</fieldset>
+
+		<fieldset>
+			<legend> Localização </legend>
+
+			<label>
+				Cep:
+				<input type="text" name="cep" id="cep" placeholder="00000-000" pattern="\d{5}-?\d{3}"
+					value="" size="10" maxlength="9" required />
+			</label><br>
+			<label>
+				Rua:<br>
+				<input name="rua" type="text" id="rua" size="60" readonly />
+			</label><br>
+			<label>
+				Bairro:<br>
+				<input name="bairro" type="text" id="bairro" size="40" readonly />
+			</label><br>
+			<label>
+				Cidade:<br>
+				<input name="cidade" type="text" id="cidade" size="40" readonly />
+			</label><br>
+			<label>
+				Estado:<br>
+				<input name="uf" type="text" id="uf" size="2" readonly />
+			</label><br>
+			<label>
+				IBGE:<br>
+				<input name="ibge" type="text" id="ibge" size="8" readonly />
+			</label><br>
+			<label>
+				Número*: <br>
+				<input type="text" name="numeroCasa" required> <br>
+			</label>
+			<label>
+				Complemento: <br>
+				<input type="text" name="complemento" > <br>
+			</label>
+
+		</fieldset>
+
+		<fieldset>
+			<legend> Mensagem do Usuário </legend>
+
+			<label>
+				Grau de urgencia: <br>
+				<input type="range" name="grau"> <br>
+			</label>
+
+			<label>
+				Mensagem*: <br>
+				<textarea name="mensagem" rows="5" cols="30" spellcheck="false" required> </textarea> <br>
+			</label>
+
+			<label>
+				Reportar erro (upload de arquivo): <br>
+				<input type="file" name="erro"> <br>
+			</label>
+		</fieldset>
+
+		<!--botão enviar -->
+		<input type="submit" name="bttEnviar" value="Enviar">
+		<!--botão limpar -->
+		<input type="reset" name="bttLimpar" value="Apagar Campos">
+	</form>
+</body>
+
+</html>

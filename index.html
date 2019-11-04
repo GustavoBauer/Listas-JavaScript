@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+    <title> Listas JS </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/slide.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <script src="js/menu.js"> </script>
+    <script src="js/slide.js"></script>
+</head>
+
+<body>
+    <div class="topnav" id="myTopnav">
+        <a href="index.html" class="active">Home</a>
+        <div class="dropdown">
+            <button class="dropbtn">Lista 1
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="pdf\lista1.pdf" target="_blank">PDF</a>
+                <a href="Lista 1\Ex1\index.html">Exercício 1</a>
+                <a href="Lista 1\Ex2\index.html">Exercício 2</a>
+                <a href="Lista 1\Ex3\index.html">Exercício 3</a>
+                <a href="Lista 1\Ex4\index.html">Exercício 4</a>
+                <a href="Lista 1\Ex5\index.html">Exercício 5</a>
+                <a href="Lista 1\Ex6\index.html">Exercício 6</a>
+                <a href="Lista 1\Ex7\index.html">Exercício 7</a>
+                <a href="Lista 1\Ex8\index.html">Exercício 8</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Lista 2
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="pdf\lista2.pdf" target="_blank">PDF</a>
+                <a href="Lista 2\Ex1\index.html">Exercício 1</a>
+                <a href="Lista 2\Ex2\index.html">Exercício 2</a>
+                <a href="Lista 2\Ex3\index.html">Exercício 3</a>
+                <a href="Lista 2\Ex4\index.html">Exercício 4</a>
+                <a href="Lista 2\Ex5\index.html">Exercício 5</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Lista 3
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="pdf\lista3.pdf" target="_blank">PDF</a>
+                <a href="Lista 3\Ex1\index.html">Exercício 1</a>
+                <a href="Lista 3\Ex2\index.html">Exercício 2</a>
+                <a href="Lista 3\Ex3\index.html">Exercício 3</a>
+                <a href="Lista 3\Ex4\index.html">Exercício 4</a>
+                <a href="Lista 3\Ex5\index.html">Exercício 5</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Lista 4
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="pdf\lista4.pdf" target="_blank">PDF</a>
+                <a href="Lista 4\Ex1\index.html">Exercício 1</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Bônus
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="Bonus/To-do_list/index.html" target="_blank">Lista To-do</a>
+                <a href="Bonus/Fomulario_Cep_API/index.html" target="_blank">Formulário API CEP</a>
+                <a href="Bonus/Axios/index.html" target="_blank">Biblioteca Axios</a>
+            </div>
+        </div>
+        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+    </div>
+    <div class="slide-container">
+        <div class="slideshow-container">
+            <a href="Lista 1/Ex1/index.html">
+                <div class="mySlides fade">
+                    <img src="img/lista1.png" alt="lista 1" />
+                    <div class="text">Exercícios – Lista 1</div>
+                </div>
+            </a>
+            <a href="Lista 2/Ex1/index.html">
+                <div class="mySlides fade">
+                    <img src="img/lista2.PNG" alt="lista 2" />
+                    <div class="text">Exercícios – Lista 2</div>
+                </div>
+            </a>
+            <a href="Lista 3/Ex1/index.html">
+                <div class="mySlides fade">
+                    <img src="img/lista3.PNG" alt="lista 3" />
+                    <div class="text">Exercícios – Lista 3</div>
+                </div>
+            </a>
+            <a href="Lista 4/Ex1/index.html">
+                <div class="mySlides fade">
+                    <img src="img/lista4.PNG" alt="lista 4" />
+                    <div class="text">Exercícios – Lista 4</div>
+                </div>
+            </a>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br />
+        <div style="text-align: center;">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+        </div>
+    </div>
+    <footer style="justify-content: space-around;">
+        <p>JavaScript</p>
+        <p>Listas de Exercícios</p>
+        <p>2° Semestre</p>
+    </footer>
+</body>
+
+</html>

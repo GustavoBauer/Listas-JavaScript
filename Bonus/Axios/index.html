@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Axios</title>
+    <style>
+        td, th{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body onload="loadOptions()">
+    <h1>IBGE</h1>
+    <label>
+        <p>Primeira década</p>
+        <select id="decada-1">
+            <option selected disabled>Selecione</option>
+        </select>
+    </label>
+    <label>
+        <p>Segunda década</p>
+        <select id="decada-2">
+            <option selected disabled>Selecione</option>
+        </select>
+    </label>
+    <input type="button" value="Rodar" onclick="executar()">
+    <br><br>
+    <table id="tabela-1" style="display:none;">
+        <tr>
+            <th>Nome</th>
+            <th>Frequencia</th>
+            <th>Ranking</th>
+        </tr>
+    </table>
+    <br>
+    <table id="tabela-2" style="display:none;">
+        <tr>
+            <th>Nome</th>
+            <th>Frequencia</th>
+            <th>Ranking</th>
+        </tr>
+    </table>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

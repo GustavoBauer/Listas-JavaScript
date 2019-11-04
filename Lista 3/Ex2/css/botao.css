@@ -1,0 +1,12 @@
+.excluir{
+    background-color: rgb(255, 0, 0);
+}
+.excluir:hover{
+    background-color: rgb(208, 0, 0);
+}
+.recuperar{
+    background-color: rgb(0, 109, 255);
+}
+.recuperar:hover{
+    background-color: rgb(0, 89, 255);
+}

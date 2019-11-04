@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+	<title> Lista 4 - Exercício 1 </title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../../css/style.css">
+	<link rel="stylesheet" href="../../css/menu.css">
+	<script src="../../js/menu.js"> </script>
+</head>
+
+<body onload="loadEstados()">
+	<div class="topnav" id="myTopnav">
+		<a href="../../index.html" class="active">Home</a>
+		<a href="../../pdf\lista4.pdf" target="_blank">PDF</a>
+		<a href="../../Lista 4\Ex1\index.html">Exercício 1</a>
+		<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+	</div>
+	<div class="form-container">
+		<form>
+            <a href="json_ajax.html" download="json_ajax.html" target="_blank" style="color: rgb(0,0,238);">Arquivo original (json_ajax.html)</a>
+			<fieldset>
+				<legend>Localização</legend>
+				<p> <label for="estados">Estado</label>
+					<select name="estados" id="estados" onchange="loadCidades(value)">
+						<option selected disabled>Selecione</option>
+					</select>
+				</p>
+				<p>
+					<label for="cidades">Cidade</label>
+					<select name="cidades" id="cidades">
+						<option selected disabled>Selecione</option>
+					</select>
+                </p>               
+            </fieldset>                    
+        </form>        
+    </div>
+    
+	<footer>
+		<a href="../../index.html"><i class="fa fa-caret-left"></i> Anterior</a>
+		<p>Lista 4 - Exercício 1</p>
+		<a href="../../index.html">Próximo <i class="fa fa-caret-right"></i></a>
+	</footer>
+
+	<script>
+        var myObj = null;
+
+        //Função utilizada para obter as informações do Estados brasileiros (utilizando Ajax, JSON e API do IBGE)
+        function loadEstados() {
+
+            //Criar a conexão Ajax
+            var xhttp = new XMLHttpRequest();
+
+            //Abrir a conexão com API do IBGE
+            xhttp.open("GET", "https://servicodados.ibge.gov.br/api/v1/localidades/estados");
+
+            //Analisar resposta da conexão
+            xhttp.onreadystatechange = function () {
+                //Se a conexão foi bem-sucedida    
+                if (this.readyState == 4 && this.status == 200) {
+                    //Converter o JSON para objeto JavaScript (o contrário, é realizado através do método JSON.stringify)
+                    myObj = JSON.parse(this.responseText);
+
+                    //Classificar pela sigla do Estado
+                    //myObj.sort(function (a, b) { return a.sigla < b.sigla ? -1 : a.sigla > b.sigla ? 1 : 0; }); 
+                    //https://pt.stackoverflow.com/questions/46600/como-ordenar-uma-array-de-objetos-com-array-sort
+
+                    // function compare(a, b) {
+                    //     if (se a fôr menor que b) {
+                    //         return -1;
+                    //     }
+                    //     if (a fôr maior que b) {
+                    //         return 1;
+                    //     }
+                    //     // são idênticos
+                    //     return 0;
+                    // }
+                    myObj.sort(function (a, b) {
+                        return a.nome.localeCompare(b.nome);
+                    }); //https://pt.stackoverflow.com/questions/16496/como-ordenar-array-de-strings-desconsiderando-acentos
+                    console.log(myObj);
+
+                    //Criar a lista de Estados (ou seja, inserir nós/elementos/tags <option> no elemento <select>)
+                    loadSelectEstados();
+                }
+            };
+            xhttp.send();
+        }        
+
+        //Função utilizada para criar os nós/tags <option> e inserir no elemento <select>, associado aos Estados
+        function loadSelectEstados() {
+            var lista = document.getElementById("estados");
+            var opcao = null, texto = null;
+            var optGroup = null,textosOptGroup = ["Centro-Oeste","Nordeste","Norte","Sudeste","Sul"];
+            for(var i = 0; i<textosOptGroup.length; i++){
+                optGroup = document.createElement('optgroup');
+                optGroup.setAttribute("id", "regiao-"+textosOptGroup[i]);
+                optGroup.setAttribute("label", textosOptGroup[i]);
+                lista.appendChild(optGroup);
+            }
+            for (var i in myObj) {
+                opcao = document.createElement('option');
+                opcao.setAttribute("value", myObj[i].id);
+                texto = document.createTextNode(myObj[i].nome);
+                opcao.appendChild(texto);
+                optGroup = document.getElementById("regiao-"+myObj[i].regiao.nome)
+                optGroup.appendChild(opcao);
+            }
+        }
+        //Função utilizada para obter as informações das cidades, conforme a seleção do Estado (utilizando Ajax, JSON e API do IBGE)
+        function loadCidades(id_estado) {
+
+            var xhttp = new XMLHttpRequest();
+            var text = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + id_estado + "/municipios";
+
+            xhttp.open("GET", text, true);
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    myObj = JSON.parse(this.responseText);
+                    myObj.sort(function (a, b) {
+                        return a.nome.localeCompare(b.nome);
+                    });                    
+                    console.log(myObj);
+                    loadSelectCidades(id_estado);
+                }
+            };
+
+            xhttp.send();
+        }
+
+        //Função utilizada para crias os nós/elementos <option> e inserir no elemento <select>, associado às cidades
+        function loadSelectCidades(id_estado) {
+            //limpar a lista de opções da seleção anterior
+            var lista = document.getElementById("cidades");
+            var opcoes = document.querySelectorAll('#cidades option');
+            for (var i = 1; i < opcoes.length; i++)
+                lista.removeChild(opcoes[i]);
+
+            //Retoma a opção Selecione na lista de cidades
+            opcoes[0].selected = true;
+
+            //Seleciona a capital
+            var capital = "";
+            switch(id_estado){
+                case "12": capital = "Rio Branco"; break;
+                case "27": capital = "Maceió"; break;
+                case "16": capital = "Macapá"; break;
+                case "13": capital = "Manaus"; break;
+                case "29": capital = "Salvador"; break;
+                case "23": capital = "Fortaleza"; break;
+                case "53": capital = "Brasília"; break;
+                case "32": capital = "Vitória"; break;
+                case "52": capital = "Goiânia"; break;
+                case "21": capital = "São Luís"; break;
+                case "51": capital = "Cuiabá"; break;
+                case "50": capital = "Campo Grande"; break;
+                case "31": capital = "Belo Horizonte"; break;
+                case "41": capital = "Curitiba"; break;
+                case "25": capital = "João Pessoa"; break;
+                case "15": capital = "Belém"; break;
+                case "26": capital = "Recife"; break;
+                case "22": capital = "Teresina"; break;
+                case "24": capital = "Natal"; break;
+                case "43": capital = "Porto Alegre"; break;
+                case "33": capital = "Rio de Janeiro"; break;
+                case "11": capital = "Porto Velho"; break;
+                case "14": capital = "Boa Vista"; break;
+                case "42": capital = "Florianópolis"; break;
+                case "35": capital = "São Paulo"; break;
+                case "28": capital = "Aracaju"; break;
+                case "17": capital = "Palmas"; break;
+                default: console.log("Erro ao achar a capital do estado");
+            }
+
+            //criar a lista de opções da seleção atual    
+            var opcao = null, texto = null;
+
+            opcao = document.createElement('option');
+            texto = document.createTextNode(capital);
+            opcao.appendChild(texto);
+            lista.appendChild(opcao);
+
+            for (var i in myObj) {  
+                opcao = document.createElement('option');
+                texto = document.createTextNode(myObj[i].nome);                
+                opcao.appendChild(texto);
+                lista.appendChild(opcao);                                     
+            }
+
+            console.log(lista);
+        }
+    </script>
+</body>
+
+</html>

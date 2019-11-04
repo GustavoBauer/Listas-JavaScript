@@ -1,0 +1,123 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;    
+    font-size: 100%;
+    font-weight: normal;
+    border: none;
+    outline: none;
+}
+
+body{
+    background-color: lightgray;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+img{
+    max-width: 100%;
+}
+
+ul{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    height: calc(100vh - 96px);
+    overflow-y: auto;
+}
+
+form{
+    flex: 1;
+    min-width: 220px;
+    max-width: 32vw;
+    border: 1px solid lightgrey;
+    margin: 3vh 10px 3vh 10px;
+    padding: 2vh 40px;
+    background-color: rgb(234, 240, 242);
+}
+
+form h3{
+    text-align: center;
+    font-weight: bold;
+    margin: 15px 0;
+    font-size: 1.3em; 
+}
+
+fieldset { 
+    display: block;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    border: 2px groove;
+}
+
+legend{
+    font-weight: bold;
+    margin: 3px;
+    padding: 7px;
+}
+
+input[type=text], select, textarea, input[type=number], input[type=date]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+  
+input[type=button], button, input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 9px 0;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+  
+input[type=button]:hover, button:hover, input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+textarea:disabled {
+    background-color: white;
+    color: black;
+    overflow-y: auto;
+    height: 45vh;
+}
+
+footer{
+    background: linear-gradient(to bottom, #333, black);
+    margin-bottom: 0;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;  
+}
+
+footer p, a{
+    color: #f2f2f2;
+    font-size: 17px;
+}
+
+footer a:hover, footer a:active{
+    text-decoration: underline;
+    color: #45a049;
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSON/Ajax</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Wagner Gomes">
+</head>
+<body onload="loadEstados()">
+    <form>
+        <fieldset>
+            <legend>Localização</legend>
+            <p> <label for="estados">Estado</label>
+                <select name="estados" id="estados" onchange="loadCidades(value)">
+                    <option selected disabled>Selecione</option>
+                </select>
+            </p>
+            <p>
+                <label for="cidades">Cidade</label>
+                <select name="cidades" id="cidades">
+                    <option selected disabled>Selecione</option>
+                </select>
+            </p>
+        </fieldset>
+    </form>
+    <script>
+        var myObj = null;
+        //Função utilizada para obter as informações do Estados brasileiros (utilizando Ajax, JSON e API do IBGE)
+        function loadEstados() {
+
+            //Criar a conexão Ajax
+            var xhttp = new XMLHttpRequest();
+
+            //Abrir a conexão com API do IBGE
+            xhttp.open("GET", "https://servicodados.ibge.gov.br/api/v1/localidades/estados");
+
+            //Analisar resposta da conexão
+            xhttp.onreadystatechange = function () {
+                //Se a conexão foi bem-sucedida    
+                if (this.readyState == 4 && this.status == 200) {
+                    //Converter o JSON para objeto JavaScript (o contrário, é realizado através do método JSON.stringify)
+                    myObj = JSON.parse(this.responseText);
+
+                    //Classificar pela sigla do Estado
+                    myObj.sort(function (a, b) { return a.sigla < b.sigla ? -1 : a.sigla > b.sigla ? 1 : 0; }); //https://pt.stackoverflow.com/questions/46600/como-ordenar-uma-array-de-objetos-com-array-sort
+
+                    // function compare(a, b) {
+                    //     if (se a fôr menor que b) {
+                    //         return -1;
+                    //     }
+                    //     if (a fôr maior que b) {
+                    //         return 1;
+                    //     }
+                    //     // são idênticos
+                    //     return 0;
+                    // }
+                    console.log(myObj);
+                    //Criar a lista de Estados (ou seja, inserir nós/elementos/tags <option> no elemento <select>)
+                    loadSelectEstados();
+                }
+            };
+            xhttp.send();
+        }
+        //Função utilizada para criar os nós/tags <option> e inserir no elemento <select>, associado aos Estados
+        function loadSelectEstados() {
+            var lista = document.getElementById("estados");
+            var opcao = null, texto = null;
+            for (var i in myObj) {
+                opcao = document.createElement('option');
+                opcao.setAttribute("value", myObj[i].id);
+                texto = document.createTextNode(myObj[i].nome);
+                opcao.appendChild(texto);
+                lista.appendChild(opcao);
+            }
+        }
+        //Função utilizada para obter as informações das cidades, conforme a seleção do Estado (utilizando Ajax, JSON e API do IBGE)
+        function loadCidades(id_estado) {
+
+            var xhttp = new XMLHttpRequest();
+            var text = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + id_estado + "/municipios";
+
+            xhttp.open("GET", text, true);
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    myObj = JSON.parse(this.responseText);
+
+                    console.log(myObj);
+                    loadSelectCidades();
+
+                }
+            };
+
+            xhttp.send();
+        }
+        //Função utilizada para crias os nós/elementos <option> e inserir no elemento <select>, associado às cidades
+        function loadSelectCidades() {
+            //limpar a lista de opções da seleção anterior
+            var lista = document.getElementById("cidades");
+            var opcoes = document.querySelectorAll('#cidades option');
+            for (var i = 1; i < opcoes.length; i++)
+                lista.removeChild(opcoes[i]);
+
+            //Retoma a opção Selecione na lista de cidades
+            opcoes[0].selected = true;
+
+            //criar a lista de opções da seleção atual    
+            var opcao = null, texto = null;
+
+            for (var i in myObj) {
+                opcao = document.createElement('option');
+                //opcao.setAttribute("value",myObj[i].id);
+                texto = document.createTextNode(myObj[i].nome);
+                opcao.appendChild(texto);
+                lista.appendChild(opcao);
+            }
+
+            console.log(lista);
+        }
+    </script>
+</body>
+</html>
